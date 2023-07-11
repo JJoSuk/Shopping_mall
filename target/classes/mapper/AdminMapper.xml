@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="kr.ezen.bbs.mapper.AdminMapper">
+	<select id="adminList" resultType="adminDTO">
+		SELECT * FROM tbl_admin
+	</select>
+
+	<select id="adminLogin" resultType="adminDTO">
+		SELECT id, password FROM tbl_admin WHERE id=#{id}
+	</select>
+
+	<select id="idCheck" resultType="adminDTO">
+		SELECT * FROM tbl_admin WHERE id=#{id}
+	</select>
+
+  	
+</mapper>

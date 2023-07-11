@@ -1,0 +1,94 @@
+drop table member;
+create table member(
+    no int primary key auto_increment,
+    id varchar(50) not null,
+    pw varchar(200) not null,
+    name varchar(50) not null,
+    -- age int not null,
+    birthday date not null,
+    email varchar(50) not null,
+    tel varchar(30) not null,
+    zipcode varchar(10),
+    road_addr varchar(200),
+    jibun_addr varchar(200),
+    detail_addr varchar(200),
+    unique key(id)
+);
+
+select * from member;
+
+
+
+drop table tbl_board;
+create table tbl_board(
+	bid int auto_increment primary key,
+    subject varchar(100) not null,
+    contents varchar(3000) not null,
+    hit int default 0,
+    writer varchar(30) not null,
+    reg_date datetime default now() not null
+);
+-- now()는 서버의 현재 시각
+
+insert into tbl_board(subject, contents, writer)
+values('테스트~~','테스트~~','아무개');
+
+select * from tbl_board;
+
+-- limit 시작인덱스, 가져올 갯수
+select * from tbl_board limit 0, 10;
+
+
+----------------------- shop ---------------------------------
+
+---------- admin ------------
+drop table tbl_admin;
+
+create table tbl_admin(
+    id varchar(20) not null,
+    password varchar(20) not null,
+    name varchar(20) not null,
+    email varchar(30) not null
+);
+
+insert into tbl_admin values('test', 'test', '홍길동', 'test@gmail.com');
+select * from tbl_admin;
+
+commit;
+
+---------- category ------------
+drop table category;
+create table category(
+    catNum int auto_increment primary key,
+    code varchar(10) not null unique,
+    catName varchar(20) not null
+);
+-- drop sequence cat_seq;
+-- create sequence cat_seq;
+
+drop table product;
+create table product(
+    pNum int auto_increment primary key,
+    pName varchar(50) not null,
+    pCategory_fk varchar(30) not null,
+    pCompany varchar(50),
+    pImage varchar(300),
+    pQty int default 0,
+    price int default 0,
+    pSpec varchar(20),
+    pContent varchar(300),
+    pPoint int default 0,
+    pInputDate date,
+    FOREIGN KEY (pCategory_fk) REFERENCES category(code)
+    ON UPDATE CASCADE
+);
+drop table tbl_cart;
+CREATE TABLE tbl_cart(
+    cNum int auto_increment PRIMARY KEY,
+    id VARCHAR(20),
+    pNum int,
+    pQty int DEFAULT 1,
+    inDate TIMESTAMP NOT NULL,
+    FOREIGN KEY (id) REFERENCES member(id) ON DELETE CASCADE,
+    FOREIGN KEY (pNum) REFERENCES product(pNum)
+);

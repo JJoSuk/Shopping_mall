@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.ezen.bbs.mapper.CartMapper">
+
+	<!-- 게시글 등록 -->
+	<insert id="addProduct" parameterType="cartDTO">
+		INSERT INTO tbl_cart(id, pNum, pQty, inDate)
+		VALUES(#{id},#{pNum},#{pQty},sysdate())
+	</insert>
+
+	<!-- 게시글 리스트 -->
+	<select id="cartList" resultType="cartDTO">
+		SELECT * FROM tbl_cart
+	</select>
+
+	<select id="checkCart" resultType="cartDTO">
+		SELECT * FROM tbl_cart
+		WHERE id = #{id} and pNum = #{pNum}
+	</select>
+
+	<select id="getCart" resultType="cartDTO">
+		SELECT c.cNum, c.id, c.pNum, c.pQty, p.pImage, p.pName, p.price, p.pPoint, p.pSpec, c.inDate
+		FROM tbl_cart c, product p
+		WHERE c.pNum = p.pNum
+		AND c.id = #{id}
+	</select>
+  	
+  	<!-- 수정하기 -->
+  	<update id="modifyQty" parameterType="cartDTO">
+  		UPDATE tbl_cart SET pQty=#{pQty}
+  		WHERE cNum=#{cNum}
+	</update>
+  	
+  	<delete id="cartDelete" parameterType="Integer">
+  		DELETE FROM tbl_cart WHERE cNum = #{cNum}
+  	</delete>
+
+
+
+</mapper>
